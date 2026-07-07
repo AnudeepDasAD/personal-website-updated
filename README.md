@@ -59,3 +59,4 @@ Upload the contents of `dist/` to any static host (GitHub Pages, Netlify, Cloudf
 
 - `node_modules/` is disposable — never copy it between machines; `npm install` recreates it.
 - If moving between computers without git, copy everything **except** `node_modules/` and `dist/`.
+

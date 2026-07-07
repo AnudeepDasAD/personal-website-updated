@@ -1,0 +1,40 @@
+---
+import { profile } from '../data/cv';
+
+const year = new Date().getFullYear();
+---
+
+<footer id="contact">
+  <div class="wrap foot-inner">
+    <span>© {year} {profile.name}</span>
+    <div class="foot-links">
+      <a href={`mailto:${profile.email}`}>Email</a>
+      <a href={profile.scholar} rel="noopener">Google Scholar</a>
+      <a href={profile.linkedin} rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--line);
+    padding: 2.2rem 0 3rem;
+  }
+
+  .foot-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+
+  .foot-links {
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+</style>

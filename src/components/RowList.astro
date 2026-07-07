@@ -1,0 +1,117 @@
+---
+import type { Row } from '../data/cv';
+
+interface Props {
+  items: Row[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="rows">
+  {
+    items.map((row) => (
+      <div class="row">
+        <div class="row-when">{row.when}</div>
+        <div class="row-what">
+          <h3>
+            {
+              row.href ? (
+                <a href={row.href} target="_blank" rel="noopener">
+                  {row.title} <span class="ext" aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                row.title
+              )
+            }
+            {row.org && <span class="org"> · {row.org}</span>}
+          </h3>
+          {row.detail && <p>{row.detail}</p>}
+          {row.amount && <p class="row-amount">{row.amount}</p>}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .rows {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+
+  .row-when {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+    padding-top: 0.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .row-what h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .row-what h3 a {
+    color: var(--ink);
+  }
+
+  .row-what h3 a:hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .ext {
+    font-family: var(--mono);
+    font-size: 0.8em;
+    color: var(--faint);
+  }
+
+  .row-what h3 a:hover .ext {
+    color: var(--accent-ink);
+  }
+
+  .org {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .row-what p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0.25rem 0 0;
+    max-width: 36rem;
+  }
+
+  .row-amount {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+
+  @media (max-width: 40rem) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+
+    .row-when {
+      padding-top: 0;
+    }
+  }
+</style>

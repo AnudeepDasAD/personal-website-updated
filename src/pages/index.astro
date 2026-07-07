@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import PublicationList from '../components/PublicationList.astro';
+import RowList from '../components/RowList.astro';
+import { profile, publications, researchThemes, experience, awards, teaching } from '../data/cv';
+---
+
+<Base
+  title="Anudeep Das — AI Safety & Security Researcher"
+  description="Anudeep Das — PhD candidate at the University of Waterloo researching AI safety and security: LLM backdoors, concept erasure in generative models, and training-data attestation."
+>
+  <Hero />
+
+  <Section id="about" title="About">
+    <div class="prose">
+      <p>
+        I'm a PhD candidate in Computer Science at the University of Waterloo, co-advised by
+        Profs. <a href="https://asokan.org/asokan/" rel="noopener">N. Asokan</a>{' '}
+        and <a href="https://cs.uwaterloo.ca/~fkerschb/" rel="noopener">Florian Kerschbaum</a>. My
+        research sits at the intersection of machine learning, security, and privacy: I probe the
+        ways adversaries can corrupt models, and the ways well-intentioned safety techniques
+        quietly fall short, then design methods that actually work.
+      </p>
+      <p>
+        My current work on backdoors in large language models is supported by a research gift
+        from <a href="https://www.coefficientgiving.org/" rel="noopener">Coefficient Giving</a>{' '}
+        (formerly Open Philanthropy). Before the PhD, I completed my BCS Honours Co-op at Waterloo
+        and led machine-learning efforts in industry, most recently as Lead ML Architect at
+        Shoplogix.
+      </p>
+    </div>
+  </Section>
+
+  {
+    /* <Section id="research" title="Research">
+    <div class="themes">
+      {
+        researchThemes.map((theme) => (
+          <div class="theme">
+            <h3>{theme.title}</h3>
+            <p>{theme.blurb}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section> */
+  }
+
+  <Section id="publications" title="Publications">
+    <span slot="note" class="section-note">
+      <a href={profile.scholar} rel="noopener">Google Scholar ↗</a>
+    </span>
+    <PublicationList items={publications} />
+  </Section>
+
+  <Section id="experience" title="Experience">
+    <RowList items={experience} />
+  </Section>
+
+  <Section id="awards" title="Awards & Grants">
+    <RowList items={awards} />
+  </Section>
+
+  <Section id="teaching" title="Teaching & Service">
+    <RowList items={teaching} />
+  </Section>
+</Base>
+
+<style>
+  .prose {
+    max-width: 40rem;
+  }
+
+  .themes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .theme h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+  }
+
+  .theme p {
+    color: var(--muted);
+    margin: 0;
+    max-width: 38rem;
+  }
+</style>

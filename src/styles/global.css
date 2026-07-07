@@ -1,0 +1,133 @@
+/* ---------- design tokens ---------- */
+:root {
+  --bg: #f5f6f8;
+  --surface: #fdfdfe;
+  --ink: #1b2230;
+  --muted: #5a6375;
+  --faint: #8a93a5;
+  --line: #d9dde5;
+  --accent: #2b44bf;
+  --accent-ink: #22369a;
+  --erase: #b3362b;
+  --badge-bg: #eef1fb;
+  --nav-bg: rgba(245, 246, 248, 0.82);
+  --serif: 'Charter', 'Bitstream Charter', 'Iowan Old Style', 'Source Serif Pro', Georgia, serif;
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10141d;
+    --surface: #161b27;
+    --ink: #e2e6ef;
+    --muted: #9aa3b5;
+    --faint: #6d7688;
+    --line: #262d3b;
+    --accent: #8ca0ff;
+    --accent-ink: #a5b5ff;
+    --erase: #e06055;
+    --badge-bg: #1e2536;
+    --nav-bg: rgba(16, 20, 29, 0.82);
+  }
+}
+
+:root[data-theme='light'] {
+  --bg: #f5f6f8;
+  --surface: #fdfdfe;
+  --ink: #1b2230;
+  --muted: #5a6375;
+  --faint: #8a93a5;
+  --line: #d9dde5;
+  --accent: #2b44bf;
+  --accent-ink: #22369a;
+  --erase: #b3362b;
+  --badge-bg: #eef1fb;
+  --nav-bg: rgba(245, 246, 248, 0.82);
+}
+
+:root[data-theme='dark'] {
+  --bg: #10141d;
+  --surface: #161b27;
+  --ink: #e2e6ef;
+  --muted: #9aa3b5;
+  --faint: #6d7688;
+  --line: #262d3b;
+  --accent: #8ca0ff;
+  --accent-ink: #a5b5ff;
+  --erase: #e06055;
+  --badge-bg: #1e2536;
+  --nav-bg: rgba(16, 20, 29, 0.82);
+}
+
+/* ---------- base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+p {
+  margin: 0 0 1.1rem;
+}
+
+.wrap {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---------- scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

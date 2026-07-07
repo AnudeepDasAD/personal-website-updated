@@ -1,0 +1,154 @@
+---
+import type { Publication } from '../data/cv';
+
+interface Props {
+  items: Publication[];
+}
+
+const { items } = Astro.props;
+
+// Render **name** in author strings as bold, escaping everything else
+function authorsHtml(authors: string): string {
+  const escaped = authors
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+---
+
+<div class="pubs">
+  {
+    items.map((pub) => (
+      <div class="pub">
+        <p class="pub-title">
+          {
+            pub.href ? (
+              <a href={pub.href} target="_blank" rel="noopener">
+                {pub.title} <span class="ext" aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              pub.title
+            )
+          }
+        </p>
+        <p class="pub-authors" set:html={authorsHtml(pub.authors)} />
+        <div class="pub-venue">
+          <span>{pub.venue}</span>
+          <span>{pub.year}</span>
+          {
+            pub.award && (
+              pub.awardHref ? (
+                <a class="badge award" href={pub.awardHref} target="_blank" rel="noopener">
+                  {pub.award}
+                </a>
+              ) : (
+                <span class="badge award">{pub.award}</span>
+              )
+            )
+          }
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .pubs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.7rem;
+  }
+
+  .pub {
+    border-left: 2px solid transparent;
+    padding-left: 0;
+    transition:
+      border-color 0.2s ease,
+      padding-left 0.2s ease;
+  }
+
+  .pub:hover {
+    border-left-color: var(--accent);
+    padding-left: 0.9rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pub {
+      transition: none;
+    }
+
+    .pub:hover {
+      padding-left: 0;
+      border-left-color: transparent;
+    }
+  }
+
+  .pub-title {
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 0.3rem;
+    text-wrap: balance;
+  }
+
+  .pub-title a {
+    color: var(--ink);
+  }
+
+  .pub-title a:hover {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .ext {
+    font-family: var(--mono);
+    font-size: 0.8em;
+    color: var(--faint);
+  }
+
+  .pub-title a:hover .ext {
+    color: var(--accent-ink);
+  }
+
+  .pub-authors {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .pub-authors :global(b) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .pub-venue {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--faint);
+  }
+
+  .badge {
+    background: var(--badge-bg);
+    border: 1px solid var(--line);
+    padding: 0.1rem 0.55rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .badge.award {
+    color: var(--erase);
+    border-color: color-mix(in srgb, var(--erase) 35%, var(--line));
+  }
+
+  a.badge.award:hover {
+    background: color-mix(in srgb, var(--erase) 12%, var(--badge-bg));
+  }
+</style>
